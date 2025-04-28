@@ -5,10 +5,7 @@ import com.edigest.myFirstProject.service.JournalEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("v2")
@@ -21,7 +18,8 @@ public class JournalEntryControllerV2 {
     // get all the posts
     @GetMapping("/get-all")
     public List<JournalEntry> getAll(){
-        return null;
+        List<JournalEntry> listOfAllEntries = journalEntryService.getAll();
+        return listOfAllEntries;
     }
 
     // create an post and insert it
@@ -34,12 +32,21 @@ public class JournalEntryControllerV2 {
     //change the post
     @PutMapping("/change-entry")
     public String changeEntry(@RequestBody JournalEntry journalEntry){
-        return null;
+        String response = journalEntryService.changeEntry(journalEntry);
+        return response;
     }
 
     //get only particular post with
     @GetMapping("/id/{myId}")
-    public JournalEntry getJournalEntryById(@PathVariable Long myId){
-        return null;
+    public Optional<JournalEntry> getJournalEntryById(@PathVariable String myId){
+        Optional<JournalEntry> journalEntry = journalEntryService.getJournalEntryById(myId);
+        return journalEntry;
+
+    }
+
+    @DeleteMapping("/id/{myid}")
+    public String deleteJournalEntry(@PathVariable("myid") String myId){
+        String response = journalEntryService.deleteEntry(myId);
+        return response;
     }
 }
