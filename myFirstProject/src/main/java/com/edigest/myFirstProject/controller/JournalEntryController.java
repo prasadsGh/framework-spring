@@ -11,7 +11,7 @@ import java.util.Map;
 @RestController
 public class JournalEntryController {
 
-    private Map<Long, JournalEntry> journalEntries = new HashMap<>();
+    private Map<String, JournalEntry> journalEntries = new HashMap<>();
 
     // get all the posts
     @GetMapping("get-all")
@@ -30,7 +30,7 @@ public class JournalEntryController {
     //change the post
     @PutMapping("change-entry")
     public String changeEntry(@RequestBody JournalEntry journalEntry){
-        long id = journalEntry.getId();
+        String id = journalEntry.getId();
         if(!journalEntries.containsKey(id)){
             return "please check id";
         }
