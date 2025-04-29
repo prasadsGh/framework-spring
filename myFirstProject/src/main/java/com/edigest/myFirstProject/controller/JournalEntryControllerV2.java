@@ -3,6 +3,8 @@ package com.edigest.myFirstProject.controller;
 import com.edigest.myFirstProject.entity.JournalEntry;
 import com.edigest.myFirstProject.service.JournalEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -38,9 +40,12 @@ public class JournalEntryControllerV2 {
 
     //get only particular post with
     @GetMapping("/id/{myId}")
-    public Optional<JournalEntry> getJournalEntryById(@PathVariable String myId){
+    public ResponseEntity<JournalEntry> getJournalEntryById(@PathVariable String myId){
         Optional<JournalEntry> journalEntry = journalEntryService.getJournalEntryById(myId);
-        return journalEntry;
+        if(journalEntry.isPresent()){
+            return new ResponseEntity<>(journalEntry.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
     }
 
